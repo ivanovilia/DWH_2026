@@ -1,0 +1,41 @@
+name: dwh-hw2-1
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    command: ["/data"]
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: dwh
+      RUSTFS_SECRET_KEY: course_hw2_local_secret_2026
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_CONSOLE_ADDRESS: 0.0.0.0:9001
+      RUSTFS_CONSOLE_ENABLE: "true"
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - rustfs_data:/data
+
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      JUPYTER_TOKEN: dwh21local
+      AWS_ACCESS_KEY_ID: dwhstudent
+      AWS_SECRET_ACCESS_KEY: course_hw2_local_secret_2026
+      AWS_DEFAULT_REGION: us-east-1
+      S3_ENDPOINT_URL: http://rustfs:9000
+      # Spark 3.5.0 ships with Hadoop 3.3.4; fetch its matching S3A connector.
+      PYSPARK_SUBMIT_ARGS: "--packages org.apache.hadoop:hadoop-aws:3.3.4 pyspark-shell"
+    ports:
+      - "127.0.0.1:8888:8888"
+      - "127.0.0.1:4040:4040"
+    volumes:
+      - ./work:/home/jovyan/work
+    depends_on:
+      - rustfs
+
+volumes:
+  rustfs_data:
