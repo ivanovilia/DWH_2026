@@ -1,0 +1,11 @@
+*(5) Project [user_uid#0L, element_uid#1L, watched_time#2L, type#23, duration#16L, feature_1#18]
++- *(5) SortMergeJoin [element_uid#1L], [element_uid#17L], Inner
+   :- *(2) Sort [element_uid#1L ASC NULLS FIRST], false, 0
+   :  +- Exchange hashpartitioning(element_uid#1L, 16), ENSURE_REQUIREMENTS, [plan_id=508]
+   :     +- *(1) Filter isnotnull(element_uid#1L)
+   :        +- FileScan csv [user_uid#0L,element_uid#1L,watched_time#2L] Batched: false, DataFilters: [isnotnull(element_uid#1L)], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/skew_transactions.csv], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<user_uid:bigint,element_uid:bigint,watched_time:bigint>
+   +- *(4) Sort [element_uid#17L ASC NULLS FIRST], false, 0
+      +- Exchange hashpartitioning(element_uid#17L, 16), ENSURE_REQUIREMENTS, [plan_id=516]
+         +- *(3) Filter isnotnull(element_uid#17L)
+            +- FileScan json [duration#16L,element_uid#17L,feature_1#18,type#23] Batched: false, DataFilters: [isnotnull(element_uid#17L)], Format: JSON, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/catalogue_rows.jsonl], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<duration:bigint,element_uid:bigint,feature_1:double,type:string>
+

@@ -1,0 +1,24 @@
+{
+  "captured_at_utc": "2026-11-13T12:50:58.132950+00:00",
+  "spark_version": "3.5.0",
+  "spark_master": "local[4]",
+  "python_cpu_count": 20,
+  "spark_driver_memory": "default",
+  "spark_executor_memory": "default",
+  "spark_default_parallelism": 4,
+  "number_of_executors_in_local_mode": 1,
+  "automatic_settings": {
+    "spark.sql.adaptive.enabled": "true",
+    "spark.sql.autoBroadcastJoinThreshold": "10485760b",
+    "spark.sql.shuffle.partitions": "200"
+  },
+  "explicit_settings": {
+    "spark.sql.adaptive.enabled": "false",
+    "spark.sql.autoBroadcastJoinThreshold": "-1",
+    "spark.sql.shuffle.partitions": "16"
+  },
+  "events_count": 5000000,
+  "users_count": 100000,
+  "campaigns_count": 25,
+  "measured_runs_per_strategy": 5
+}

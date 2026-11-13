@@ -1,0 +1,5 @@
+strategy,runs,median_seconds,min_seconds,max_seconds,shuffle_read_bytes_median,shuffle_write_bytes_median,memory_spilled_bytes_max,disk_spilled_bytes_max,task_duration_max_median_max
+auto,5,1.494,1.425,6.632,0.0,0.0,0.0,0.0,1.01
+broadcast,5,1.646,1.433,4.065,0.0,0.0,0.0,0.0,1.01
+merge,5,2.055,1.981,8.58,50648599.0,50648599.0,0.0,0.0,201.93
+shuffle_hash,5,1.957,1.93,21.386,50648599.0,50648599.0,0.0,0.0,804.0

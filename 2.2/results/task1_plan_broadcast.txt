@@ -1,0 +1,11 @@
+*(2) Project [campaign_id#25L, campaign_name#20, send_at#27, email_domain#155, user_id#73L, user_fio#74, user_email#75, user_login#76]
++- *(2) BroadcastHashJoin [email_domain#155], [email_domain#26], Inner, BuildRight, ((valid_from#77 <= send_at#27) AND (isnull(valid_to#78) OR (send_at#27 < valid_to#78))), false
+   :- *(2) Project [lower(regexp_extract(user_email#75, @([^@]+)$, 1)) AS email_domain#155, user_id#73L, user_fio#74, user_email#75, user_login#76, valid_from#77, valid_to#78]
+   :  +- *(2) Filter (isnotnull(valid_from#77) AND isnotnull(lower(regexp_extract(user_email#75, @([^@]+)$, 1))))
+   :     +- *(2) ColumnarToRow
+   :        +- FileScan parquet [user_id#73L,user_fio#74,user_email#75,user_login#76,valid_from#77,valid_to#78] Batched: true, DataFilters: [isnotnull(valid_from#77), isnotnull(lower(regexp_extract(user_email#75, @([^@]+)$, 1)))], Format: Parquet, Location: InMemoryFileIndex(1 paths)[s3a://dwh-homework/hw22/scd2/users], PartitionFilters: [], PushedFilters: [IsNotNull(valid_from)], ReadSchema: struct<user_id:bigint,user_fio:string,user_email:string,user_login:string,valid_from:timestamp,va...
+   +- BroadcastExchange HashedRelationBroadcastMode(List(input[1, string, true]),false), [plan_id=611]
+      +- *(1) Project [cast(campaign_id#17 as bigint) AS campaign_id#25L, lower(email_domain#18) AS email_domain#26, gettimestamp(send_at#19, yyyy-MM-dd'T'HH:mm:ssX, TimestampType, Some(UTC), false) AS send_at#27, campaign_name#20]
+         +- *(1) Filter (isnotnull(gettimestamp(send_at#19, yyyy-MM-dd'T'HH:mm:ssX, TimestampType, Some(UTC), false)) AND isnotnull(lower(email_domain#18)))
+            +- FileScan csv [campaign_id#17,email_domain#18,send_at#19,campaign_name#20] Batched: false, DataFilters: [isnotnull(gettimestamp(send_at#19, yyyy-MM-dd'T'HH:mm:ssX, TimestampType, Some(UTC), false)), is..., Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task1/campaigns.csv], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<campaign_id:string,email_domain:string,send_at:string,campaign_name:string>
+

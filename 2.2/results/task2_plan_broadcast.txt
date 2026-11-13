@@ -1,0 +1,8 @@
+*(2) Project [user_uid#0L, element_uid#1L, watched_time#2L, type#23, duration#16L, feature_1#18]
++- *(2) BroadcastHashJoin [element_uid#1L], [element_uid#17L], Inner, BuildRight, false
+   :- *(2) Filter isnotnull(element_uid#1L)
+   :  +- FileScan csv [user_uid#0L,element_uid#1L,watched_time#2L] Batched: false, DataFilters: [isnotnull(element_uid#1L)], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/skew_transactions.csv], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<user_uid:bigint,element_uid:bigint,watched_time:bigint>
+   +- BroadcastExchange HashedRelationBroadcastMode(List(input[1, bigint, false]),false), [plan_id=571]
+      +- *(1) Filter isnotnull(element_uid#17L)
+         +- FileScan json [duration#16L,element_uid#17L,feature_1#18,type#23] Batched: false, DataFilters: [isnotnull(element_uid#17L)], Format: JSON, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/catalogue_rows.jsonl], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<duration:bigint,element_uid:bigint,feature_1:double,type:string>
+

@@ -1,0 +1,14 @@
+*(5) Project [user_uid#0L, element_uid#1L, watched_time#2L, type#23, duration#16L, feature_1#18]
++- *(5) SortMergeJoin [element_uid#1L, _salt#193], [element_uid#17L, _salt#205], Inner
+   :- *(2) Sort [element_uid#1L ASC NULLS FIRST, _salt#193 ASC NULLS FIRST], false, 0
+   :  +- Exchange hashpartitioning(element_uid#1L, _salt#193, 16), ENSURE_REQUIREMENTS, [plan_id=620]
+   :     +- *(1) Project [user_uid#0L, element_uid#1L, watched_time#2L, CASE WHEN (element_uid#1L = 2714) THEN cast(pmod(xxhash64(user_uid#0L, element_uid#1L, watched_time#2L, 42), 16) as int) ELSE 0 END AS _salt#193]
+   :        +- *(1) Filter (isnotnull(element_uid#1L) AND CASE WHEN (element_uid#1L = 2714) THEN isnotnull(cast(pmod(xxhash64(user_uid#0L, element_uid#1L, watched_time#2L, 42), 16) as int)) ELSE true END)
+   :           +- FileScan csv [user_uid#0L,element_uid#1L,watched_time#2L] Batched: false, DataFilters: [isnotnull(element_uid#1L), CASE WHEN (element_uid#1L = 2714) THEN isnotnull(cast(pmod(xxhash64(u..., Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/skew_transactions.csv], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<user_uid:bigint,element_uid:bigint,watched_time:bigint>
+   +- *(4) Sort [element_uid#17L ASC NULLS FIRST, _salt#205 ASC NULLS FIRST], false, 0
+      +- Exchange hashpartitioning(element_uid#17L, _salt#205, 16), ENSURE_REQUIREMENTS, [plan_id=630]
+         +- *(3) Generate explode(_salts#198), [element_uid#17L, type#23, duration#16L, feature_1#18], false, [_salt#205]
+            +- *(3) Project [element_uid#17L, type#23, duration#16L, feature_1#18, CASE WHEN (element_uid#17L = 2714) THEN org.apache.spark.sql.catalyst.expressions.UnsafeArrayData@f1dd012b ELSE [0] END AS _salts#198]
+               +- *(3) Filter ((size(CASE WHEN (element_uid#17L = 2714) THEN org.apache.spark.sql.catalyst.expressions.UnsafeArrayData@f1dd012b ELSE [0] END, true) > 0) AND isnotnull(element_uid#17L))
+                  +- FileScan json [duration#16L,element_uid#17L,feature_1#18,type#23] Batched: false, DataFilters: [(size(CASE WHEN (element_uid#17L = 2714) THEN org.apache.spark.sql.catalyst.expressions.UnsafeAr..., Format: JSON, Location: InMemoryFileIndex(1 paths)[file:/home/jovyan/work/hw2_2/data4hw2_2/task2/catalogue_rows.jsonl], PartitionFilters: [], PushedFilters: [IsNotNull(element_uid)], ReadSchema: struct<duration:bigint,element_uid:bigint,feature_1:double,type:string>
+

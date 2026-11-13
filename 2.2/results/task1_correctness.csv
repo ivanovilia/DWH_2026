@@ -1,0 +1,5 @@
+strategy,rows,missing_from_strategy,extra_in_strategy,duplicate_campaign_user,parquet_files
+auto,500233,0,0,0,4
+merge,500233,0,0,0,5
+broadcast,500233,0,0,0,4
+shuffle_hash,500233,0,0,0,5

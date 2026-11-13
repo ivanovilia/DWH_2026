@@ -1,0 +1,4 @@
+strategy,rows,missing,extra,parquet_files
+baseline,30070692,0,0,16
+broadcast,30070692,0,0,4
+salt,30070692,0,0,16

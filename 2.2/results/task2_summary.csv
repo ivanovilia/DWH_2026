@@ -1,0 +1,4 @@
+strategy,runs,median_seconds,min_seconds,max_seconds,shuffle_read_bytes_median,shuffle_write_bytes_median,memory_spilled_bytes_max,disk_spilled_bytes_max,task_duration_max_median_max
+baseline,3,37.201,33.998,51.191,376869985.0,376869985.0,763360416.0,243019005.0,8.33
+broadcast,3,27.448,26.936,39.935,0.0,0.0,0.0,0.0,1.54
+salt,3,43.805,40.727,51.254,393365534.0,393365534.0,1006629120.0,261218324.0,3.27
