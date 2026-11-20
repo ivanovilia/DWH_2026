@@ -1,0 +1,8 @@
+PS C:\dwh\hw2_3> docker compose run --rm --no-deps tools python /opt/airflow/scripts/check_environment.py
+Container baumanka-hw23-tools-run-7948be6749bf Creating
+Container baumanka-hw23-tools-run-7948be6749bf Created
+26/11/20 17:12:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/20 17:12:36 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+OK: Spark 3.5.4, Hadoop 3.3.4, S3A write/read, input data

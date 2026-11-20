@@ -1,0 +1,11 @@
+PS C:\dwh\hw2_3> docker compose run --rm --no-deps tools python /opt/airflow/scripts/export_results.py --dataset demo
+Container baumanka-hw23-tools-run-d44bc2954432 Creating
+Container baumanka-hw23-tools-run-d44bc2954432 Created
+results/demo/user_scd2/snapshot_date=2026-01-23/: 2 files
+results/demo/user_scd2/snapshot_date=2026-01-24/: 2 files
+results/demo/user_scd2/snapshot_date=2026-01-25/: 2 files
+results/demo/campaign_recipients/calculation_date=2026-01-23/: 2 files
+results/demo/campaign_recipients/calculation_date=2026-01-24/: 2 files
+results/demo/campaign_recipients/calculation_date=2026-01-25/: 2 files
+EXPORT COMPLETE: 12 objects in /opt/airflow/exports/demo
+PS C:\dwh\hw2_3>

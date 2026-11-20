@@ -1,0 +1,221 @@
+PS C:\dwh\hw2_3> docker compose run --rm --no-deps tools python /opt/airflow/jobs/validate_results.py --phase before
+Container baumanka-hw23-tools-run-4db65b88363d Creating
+Container baumanka-hw23-tools-run-4db65b88363d Created
+26/11/20 17:15:50 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/20 17:15:52 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+
+SCD2 2026-01-23
+  rows=961, users=100
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL valid_from: 0
+  NULL is_current: 0
+  NULL snapshot_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong snapshot_date: 0
+  duplicate user_id/valid_from: 0
+  invalid active flag: 0
+  nonpositive validity interval: 0
+  wrong current version count: 0
+  gaps / overlaps: 0
+  unnecessary versions (identical adjacent profiles): 0
+  future versions: 0
+
+RECIPIENTS 2026-01-23
+  rows=53
+  NULL campaign_id: 0
+  NULL campaign_name: 0
+  NULL send_at: 0
+  NULL email_domain: 0
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL user_valid_from: 0
+  NULL calculation_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong calculation_date: 0
+  duplicate campaign_id/user_id: 0
+  domain mismatch: 0
+  historical interval mismatch: 0
+  campaign outside processing day: 0
+  COMPARE recompute JOIN 2026-01-23: missing=0, extra=0
+  campaign 11 (Campaign_0011): recipients=10
+  campaign 16 (Campaign_0016): recipients=23
+  campaign 23 (Campaign_0023): recipients=20
+  META SCD2
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-23T00:00:00+00:00, _task_id=build_user_scd2, _data_interval_start=2026-01-23 00:00:00, _data_interval_end=2026-01-24 00:00:00, _loaded_at=2026-11-20 17:13:44.553674, rows=961
+    META SUMMARY rows=961 min_loaded_at=2026-11-20 17:13:44.553674 max_loaded_at=2026-11-20 17:13:44.553674
+  META recipients
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-23T00:00:00+00:00, _task_id=build_campaign_recipients, _data_interval_start=2026-01-23 00:00:00, _data_interval_end=2026-01-24 00:00:00, _loaded_at=2026-11-20 17:13:54.163141, rows=53
+    META SUMMARY rows=53 min_loaded_at=2026-11-20 17:13:54.163141 max_loaded_at=2026-11-20 17:13:54.163141
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/user_scd2/snapshot_date=2026-01-23/
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/campaign_recipients/calculation_date=2026-01-23/
+
+SCD2 2026-01-24
+  rows=995, users=100
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL valid_from: 0
+  NULL is_current: 0
+  NULL snapshot_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong snapshot_date: 0
+  duplicate user_id/valid_from: 0
+  invalid active flag: 0
+  nonpositive validity interval: 0
+  wrong current version count: 0
+  gaps / overlaps: 0
+  unnecessary versions (identical adjacent profiles): 0
+  future versions: 0
+
+RECIPIENTS 2026-01-24
+  rows=25
+  NULL campaign_id: 0
+  NULL campaign_name: 0
+  NULL send_at: 0
+  NULL email_domain: 0
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL user_valid_from: 0
+  NULL calculation_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong calculation_date: 0
+  duplicate campaign_id/user_id: 0
+  domain mismatch: 0
+  historical interval mismatch: 0
+  campaign outside processing day: 0
+  COMPARE recompute JOIN 2026-01-24: missing=0, extra=0
+  campaign 21 (Campaign_0021): recipients=25
+  META SCD2
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-24T00:00:00+00:00, _task_id=build_user_scd2, _data_interval_start=2026-01-24 00:00:00, _data_interval_end=2026-01-25 00:00:00, _loaded_at=2026-11-20 17:14:04.916894, rows=995
+    META SUMMARY rows=995 min_loaded_at=2026-11-20 17:14:04.916894 max_loaded_at=2026-11-20 17:14:04.916894
+  META recipients
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-24T00:00:00+00:00, _task_id=build_campaign_recipients, _data_interval_start=2026-01-24 00:00:00, _data_interval_end=2026-01-25 00:00:00, _loaded_at=2026-11-20 17:14:14.834870, rows=25
+    META SUMMARY rows=25 min_loaded_at=2026-11-20 17:14:14.834870 max_loaded_at=2026-11-20 17:14:14.834870
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/user_scd2/snapshot_date=2026-01-24/
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/campaign_recipients/calculation_date=2026-01-24/
+
+SCD2 2026-01-25
+  rows=1036, users=100
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL valid_from: 0
+  NULL is_current: 0
+  NULL snapshot_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong snapshot_date: 0
+  duplicate user_id/valid_from: 0
+  invalid active flag: 0
+  nonpositive validity interval: 0
+  wrong current version count: 0
+  gaps / overlaps: 0
+  unnecessary versions (identical adjacent profiles): 0
+  future versions: 0
+
+RECIPIENTS 2026-01-25
+  rows=22
+  NULL campaign_id: 0
+  NULL campaign_name: 0
+  NULL send_at: 0
+  NULL email_domain: 0
+  NULL user_id: 0
+  NULL user_fio: 0
+  NULL user_email: 0
+  NULL user_login: 0
+  NULL user_valid_from: 0
+  NULL calculation_date: 0
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+  wrong calculation_date: 0
+  duplicate campaign_id/user_id: 0
+  domain mismatch: 0
+  historical interval mismatch: 0
+  campaign outside processing day: 0
+  COMPARE recompute JOIN 2026-01-25: missing=0, extra=0
+  campaign 19 (Campaign_0019): recipients=22
+  META SCD2
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-25T00:00:00+00:00, _task_id=build_user_scd2, _data_interval_start=2026-01-25 00:00:00, _data_interval_end=2026-01-26 00:00:00, _loaded_at=2026-11-20 17:14:24.366474, rows=1036
+    META SUMMARY rows=1036 min_loaded_at=2026-11-20 17:14:24.366474 max_loaded_at=2026-11-20 17:14:24.366474
+  META recipients
+  NULL _dag_id: 0
+  NULL _run_id: 0
+  NULL _task_id: 0
+  NULL _data_interval_start: 0
+  NULL _data_interval_end: 0
+  NULL _loaded_at: 0
+    _dag_id=hw23_daily_scd2_campaigns, _run_id=scheduled__2026-01-25T00:00:00+00:00, _task_id=build_campaign_recipients, _data_interval_start=2026-01-25 00:00:00, _data_interval_end=2026-01-26 00:00:00, _loaded_at=2026-11-20 17:14:33.900659, rows=22
+    META SUMMARY rows=22 min_loaded_at=2026-11-20 17:14:33.900659 max_loaded_at=2026-11-20 17:14:33.900659
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/user_scd2/snapshot_date=2026-01-25/
+  BASELINE SAVED: s3a://hw23/_verification/hw23/demo/campaign_recipients/calculation_date=2026-01-25/
+
+ALL CHECKS PASSED: phase=before

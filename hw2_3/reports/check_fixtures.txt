@@ -1,0 +1,22 @@
+PS C:\dwh\hw2_3> docker compose run --rm --no-deps tools python /opt/airflow/jobs/check_fixtures.py
+Container baumanka-hw23-tools-run-0c21ecbfd134 Creating
+Container baumanka-hw23-tools-run-0c21ecbfd134 Created
+26/11/20 17:12:50 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/20 17:12:52 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+OK: 2026-01-23, campaign_id=101, users=[1001]
+OK: 2026-01-23, campaign_id=102, users=[1002]
+OK: 2026-01-23, campaign_id=103, users=[1001]
+OK: 2026-01-23, campaign_id=104, users=[]
+OK: 2026-01-24, campaign_id=105, users=[1001, 1002]
+OK: 2026-01-24, campaign_id=106, users=[1003]
+OK: 2026-01-24, campaign_id=107, users=[]
+OK: 2026-01-25, campaign_id=108, users=[1002]
+OK: 2026-01-25, campaign_id=109, users=[1001]
+OK: 2026-01-25, campaign_id=110, users=[1004]
+OK: 2026-01-25, campaign_id=113, users=[]
+OK: 2026-01-25, campaign_id=115, users=[1001]
+OK: 2026-01-25, campaign_id=116, users=[1001]
+OK: empty result 2026-01-27 has 17 typed columns
+FIXTURE TESTS PASSED: boundaries, historical email, repeats, empty result, return to old login
