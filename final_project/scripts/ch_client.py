@@ -1,4 +1,4 @@
-"""Minimal ClickHouse HTTP client for bootstrap, publishing and reports."""
+"""HTTP-клиент ClickHouse для инициализации, публикации данных и получения отчётов"""
 from __future__ import annotations
 import os
 import requests

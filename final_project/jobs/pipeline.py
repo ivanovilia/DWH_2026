@@ -1,9 +1,4 @@
-"""End-to-end Spark batch pipeline for online cinema (UTC, Spark 3.5.x).
-
-Stages: snapshot -> scd2 -> marts -> validate -> publish.
-The publish stage switches an entire *day* to a new immutable publish_id only
-once every result has passed checks and has reached ClickHouse.
-"""
+"""Пакетный конвейер обработки данных онлайн кинотеатра в Spark, время указано в UTC."""
 from __future__ import annotations
 
 import argparse
@@ -192,7 +187,7 @@ def snapshot_inputs(spark, ctx):
     assert_unique(catalogue, ["content_id"], "catalogue")
     check(catalogue.where("duration_seconds <= 0 OR duration_seconds IS NULL").limit(1).count() == 0,
           "Catalogue duration should be positive")
-    # IDs are stable for retries; choose the earliest arrival deterministically.
+    # При повторной доставке идентификатор сохраняется. Выбираем запись с самым ранним временем поступления.
     event_w = Window.partitionBy("event_id").orderBy("available_at", "event_time")
     change_w = Window.partitionBy("change_id").orderBy("available_at", "effective_at")
     events = events.withColumn("_rn", F.row_number().over(event_w)).where("_rn=1").drop("_rn")
@@ -266,7 +261,7 @@ def calculate_marts(spark, ctx):
     joined, views, searches = joined_views(spark, ctx)
     print("HISTORICAL JOIN PHYSICAL PLAN", flush=True)
     joined.explain(mode="formatted")
-    # Prevent silent row multiplication if catalogue or SCD2 has an invalid key.
+    # Проверяем, что ошибки в ключах каталога или истории SCD2 не привели к дублированию строк при соединении.
     assert_unique(joined, ["event_id"], "joined views")
     check(joined.count() == views.count(), "Not every view matched exactly one catalogue and profile")
     check(joined.where("watch_time_seconds IS NULL OR watch_time_seconds < 0").limit(1).count() == 0,
@@ -295,8 +290,8 @@ def assert_multiset_equal(actual, expected, name):
 
 
 def validate_rdd(spark, ctx, joined: DataFrame, searches: DataFrame, top: DataFrame, words: DataFrame):
-    """Independent RDD computation; does not reuse DF aggregation operators."""
-    # Search: preserve repeated occurrences of a word in one query.
+    """Независимо рассчитывает показатели через RDD без использования агрегаций DataFrame."""
+    # Учитываем каждое вхождение слова, даже если оно повторяется в одном поисковом запросе.
     rdd_word = (searches.select("event_time", "query").rdd
                 .flatMap(lambda row: [((row[0].date().isoformat(), token), 1)
                                       for token in (row[1] or "").lower().split() if len(token) > 4])
@@ -306,7 +301,7 @@ def validate_rdd(spark, ctx, joined: DataFrame, searches: DataFrame, top: DataFr
     df_word_rows = sorted((str(r.day), r.word, r.frequency) for r in words.collect())
     check(rdd_word_rows == df_word_rows, "RDD/DF search-word frequencies differ")
 
-    # Top-5: compute daily content counts independently from raw joined views.
+    # Для дневного топ-5 отдельно считаем просмотры каждого объекта по строкам, полученным после соединения.
     rdd_top_counts = (joined.select("event_time", "content_id", "watch_time_seconds").rdd
                       .map(lambda row: ((row[0].date().isoformat(), row[1]), (1, row[2])))
                       .reduceByKey(lambda a, b: (a[0] + b[0], a[1] + b[1])))
@@ -344,7 +339,7 @@ def validate_marts(spark, ctx):
     sum_minute = marts["minute"].agg(F.sum("views"), F.sum("watched_seconds")).first()
     sum_daily = marts["daily_country_tier"].agg(F.sum("views"), F.sum("watched_seconds")).first()
     expected = joined.agg(F.count("*"), F.sum("watch_time_seconds")).first()
-    # Treat empty daily intervals as zero (a supported valid result).
+    # Для дня без данных нулевой результат допустим.
     numbers = tuple(int(x or 0) for x in sum_minute)
     check(numbers == tuple(int(x or 0) for x in expected), "Minute totals do not match unique views")
     check(tuple(int(x or 0) for x in sum_daily) == numbers, "Country/tier totals differ from minute")
@@ -391,7 +386,7 @@ def publish_marts(spark, ctx):
     check(validation.get("status") == "passed" and validation.get("run_id") == ctx.run_id,
           "Publication requires successful validation for the same run")
     publish_id = uuid.uuid4().hex
-    # Old versions remain immutable. They are ignored unless selected by the day pointer.
+    # Старые версии сохраняются. При чтении учитывается только версия, на которую указывает запись за день.
     for name, table in MART_TABLES.items():
         frame = spark.read.parquet(ctx.path("marts", name))
         columns = MART_COLUMNS[name] + META
@@ -401,10 +396,10 @@ def publish_marts(spark, ctx):
               f"ClickHouse {name}: expected {validation['marts'][name]} inserted={n} stored={db_n}")
         print(f"PUBLISHED {table} rows={n} publish_id={publish_id}", flush=True)
     revision = time.time_ns()
-    # Atomic logical publication: only this final insertion reveals all four marts.
+    # Эта последняя вставка одновременно публикует данные всех четырёх витрин.
     ch_query(f"INSERT INTO published_days (day,publish_id,_run_id,revision,published_at) VALUES "
              f"('{ctx.day}','{publish_id}','{ctx.run_id}',{revision},now64(3))")
-    # Advance T only across contiguous published full days, starting from existing T.
+    # Сдвигаем границу T от текущего значения только через полностью опубликованные дни, идущие подряд.
     current_iso = ch_query("SELECT formatDateTime(t,'%Y-%m-%d') FROM report_cutover FINAL WHERE id=1").strip()
     current = date.fromisoformat(current_iso)
     published = {line.strip() for line in ch_query("SELECT toString(day) FROM published_days FINAL").splitlines()}

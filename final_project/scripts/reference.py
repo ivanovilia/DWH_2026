@@ -1,7 +1,6 @@
-"""Independent stdlib reference calculation for the provided JSONL datasets.
-
-Used to verify all Spark/ClickHouse published values on the *fully replayed*
-fixture or demo. Does not import Spark or the project's transformation code.
+"""
+После отправки всех сообщений набора позволяет проверить все показатели,
+которые Spark опубликовал в ClickHouse.
 """
 from __future__ import annotations
 
@@ -17,7 +16,7 @@ def rows(path):
 
 
 def unique_by_id(items, id_column):
-    # Contract guarantees equal business fields for each repeated ID.
+    # По контракту данных записи с одним идентификатором имеют одинаковые значения бизнес-полей.
     selected = {}
     for row in items:
         identifier = row[id_column]

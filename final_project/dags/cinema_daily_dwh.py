@@ -1,8 +1,8 @@
-"""Final DWH: scheduled UTC processing of 2026-01-01..2026-01-03.
+"""Обработка данных хранилища по расписанию за 1–3 января 2026 года по UTC.
 
-The DAG is initially paused. Replay the first event-arrival phase and wait for
-both Kafka consumers before unpausing, otherwise the snapshot may be incomplete.
-Use Trigger DAG + {"day":"2026-01-01"} to recompute a historical day.
+Изначально DAG приостановлен. Перед включением расписания отправьте первую порцию событий
+и дождитесь, пока оба потребителя Kafka её обработают, чтобы снимок данных был полным.
+Чтобы пересчитать день, выберите Trigger DAG и укажите дату, например {"day":"2026-01-01"}.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ def execute_stage(stage: str, **context):
     configuration = dag_run.conf or {}
     day = (configuration["day"] if configuration.get("day") else
            context["data_interval_start"].in_timezone("UTC").date().isoformat())
-    # Do not allow arbitrary directory traversal via dag_run.conf.
+    # Проверяем формат даты, чтобы через dag_run.conf нельзя было передать произвольный путь.
     from datetime import date
     date.fromisoformat(day)
     cmd = [sys.executable, "/opt/airflow/jobs/pipeline.py", stage,
@@ -34,8 +34,8 @@ def execute_stage(stage: str, **context):
            "--task-id", context["task"].task_id,
            "--dataset", os.environ.get("FP_DATASET", "fixture")]
     print("EXEC", " ".join(cmd), flush=True)
-    # Pipe child stdout through Airflow logging so the actual Spark plan and
-    # validation messages remain visible on the task's Logs tab.
+    # Направляем вывод дочернего процесса в журнал Airflow, чтобы на вкладке Logs задачи
+    # были видны фактический план Spark и результаты проверок.
     with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                           text=True, bufsize=1) as process:
         for line in process.stdout:

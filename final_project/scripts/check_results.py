@@ -1,4 +1,4 @@
-"""Compare the *fully replayed and republished* ClickHouse marts to stdlib reference."""
+"""Сверяет витрины ClickHouse с эталонным расчётом на стандартной библиотеке Python после полной повторной отправки данных и публикации витрин."""
 from __future__ import annotations
 import argparse
 import json

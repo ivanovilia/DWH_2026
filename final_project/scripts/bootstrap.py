@@ -1,4 +1,4 @@
-"""Create S3 bucket, catalogue and ClickHouse schemas; safe to invoke again."""
+"""Создаёт бакет S3, каталог и схемы ClickHouse"""
 from __future__ import annotations
 import os
 import sys
@@ -21,12 +21,12 @@ def main():
                   Body=source.read_bytes())
     sql_path = Path("/opt/airflow/sql/schema.sql")
     content = sql_path.read_text(encoding="utf-8")
-    # Every statement is separated by a line made of exactly '-- SPLIT --'.
+    # SQL-команды разделяет строка, содержащая только маркер '-- SPLIT --'.
     for statement in content.split("\n-- SPLIT --\n"):
         statement = statement.strip()
         if statement:
             query(statement)
-    # Initialization must not reset an existing report cutover.
+    # При повторной инициализации сохраняем текущую границу между пакетными и оперативными данными отчёта.
     if int(query("SELECT count() FROM report_cutover")) == 0:
         query("INSERT INTO report_cutover (id,t,revision) VALUES (1, toDateTime('2026-01-01 00:00:00','UTC'),1)")
     print(f"BOOTSTRAP OK dataset={ds}, bucket={bucket}, schemas and Kafka MV initialized")

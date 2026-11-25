@@ -1,7 +1,4 @@
-"""Independent Kafka consumer group: persist every delivery in S3 before committing its offset.
-
-Messages are archived in partition-specific, immutable JSONL batches. A failed commit
-may cause an extra copy; the Spark batch layer deduplicates by business IDs.
+"""Независимая группа потребителей Kafka сохраняет каждое сообщение в S3 до фиксации смещения.
 """
 from __future__ import annotations
 

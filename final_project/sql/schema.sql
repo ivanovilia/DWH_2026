@@ -1,4 +1,4 @@
--- Schema for the online cinema final project. Statements are separated by marker lines.
+-- Схема данных онлайн-кинотеатра.-- SPLIT --.
 CREATE TABLE IF NOT EXISTS live_events (
     event_id String,
     event_time DateTime('UTC'),
@@ -41,8 +41,8 @@ SELECT event_id,
 FROM kafka_events;
 
 -- SPLIT --
--- Because retries repeat event_id, aggregate after event-id deduplication rather
--- than directly summing raw Kafka blocks. All repeated business fields are equal.
+-- При повторной доставке события его event_id и значения бизнес-полей сохраняются.
+-- Перед агрегацией удаляем повторы по event_id, чтобы каждое событие учитывалось один раз.
 CREATE VIEW IF NOT EXISTS live_minute AS
 SELECT toStartOfMinute(dedup_event_time) AS minute,
        assumeNotNull(dedup_content_id) AS content_id,
@@ -104,7 +104,7 @@ PARTITION BY toYYYYMM(day)
 ORDER BY (day,word,publish_id);
 
 -- SPLIT --
--- Active version for each day is changed only after *all* marts were inserted and checked.
+-- Активную версию дня меняем только после загрузки и проверки всех витрин.
 CREATE TABLE IF NOT EXISTS published_days (
     day Date,
     publish_id String,
@@ -145,7 +145,7 @@ FROM batch_search_words AS b FINAL
 INNER JOIN published_days AS p FINAL ON b.day=p.day AND b.publish_id=p.publish_id;
 
 -- SPLIT --
--- T is inclusive on the realtime side. Both branches have same keys and metrics.
+-- Данные с момента T включительно берём из оперативного контура. В обоих контурах одинаковые ключи и показатели.
 CREATE VIEW IF NOT EXISTS final_minute AS
 SELECT u.minute AS minute,u.content_id AS content_id,
        sum(u.views) AS views,sum(u.watched_seconds) AS watched_seconds

@@ -1,4 +1,4 @@
-"""Print raw archive message totals and unique business ids; use before Spark backfill."""
+"""Выводит число сообщений и уникальных бизнес-идентификаторов в архиве перед пересчётом истории в Spark"""
 import json
 import os
 from collections import Counter

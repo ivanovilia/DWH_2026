@@ -1,4 +1,4 @@
-"""Show live, batch and unified minute metrics and the current T."""
+"""Выводит поминутные показатели оперативного, пакетного и объединённого отчётов и текущее значение границы T."""
 from ch_client import query
 
 if __name__ == "__main__":
