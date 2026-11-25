@@ -1,6 +1,6 @@
 # Итоговый проект DWH
 
-**Результаты:** [отчёт о выполнении](reports/REPORT.md), [инструкция запуска и примеры SQL](README_IMPLEMENTATION.md), [условие](REQUIREMENTS.md), [происхождение файлов](SOURCE_PROVENANCE.md).
+**Результаты:** [отчёт о выполнении](reports/REPORT.md), [условие](REQUIREMENTS.md).
 
 ## Запуск
 
