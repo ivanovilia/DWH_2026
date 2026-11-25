@@ -1,10 +1,10 @@
-# Итоговый проект DWH — отчёт о выполнении
+# Итоговый проект DWHии
 
 ## 1. Архитектура и окружение
 
-Реализованы оперативный и пакетный контуры обработки данных онлайн-кинотеатра. Оперативный контур: Kafka → ClickHouse Kafka Engine → материализованное представление → `live_events` → `live_minute`. Независимый потребитель Kafka сохраняет исходные сообщения в S3 (RustFS). Пакетный контур: S3 → Spark → проверенные витрины ClickHouse; расчётами управляет Airflow.
+Реализованы оперативный и пакетный контуры обработки данных онлайн-кинотеатра. Оперативный контур: Kafka - ClickHouse Kafka Engine - материализованное представление - `live_events` - `live_minute`. Независимый потребитель Kafka сохраняет исходные сообщения в S3 (RustFS). Пакетный контур: S3 - Spark -  витрины ClickHouse; расчётами управляет Airflow.
 
-Окружение развёрнуто на Windows 11 в Docker: Kafka 3.9.1, ClickHouse 25.3.14.14, RustFS 1.0.4, Spark 3.5.4, Airflow 2.10.5, PostgreSQL 16.6. Использован контрольный набор `fixture`.
+Окружение развёрнуто на Windows 11 в Docker.
 
 [Контейнеры](screenshots/01_docker_services.png) · [Архив S3](screenshots/05_rustfs_archive.png) · [Оперативная витрина](screenshots/06_clickhouse_minute.png)
 
