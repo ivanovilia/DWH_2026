@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "mode": "fixture",
+  "start_time": "2026-01-01T00:00:00Z",
+  "catalogue_sha256": "de951d1fc787b48960d97e73bc1be39d8357a8db7689692003da5e07a6d52762",
+  "dataset_id": "38b65ed6e0b0",
+  "event_messages": 28,
+  "unique_events": 26,
+  "profile_messages": 9,
+  "unique_changes": 8,
+  "users": 3,
+  "catalogue_rows": 200,
+  "suggested_arrival_cutoff": "2026-01-04T00:00:00Z",
+  "event_time_min": "2026-01-01T00:01:00Z",
+  "event_time_max": "2026-01-03T00:00:01Z",
+  "available_at_max": "2026-01-04T00:00:30Z"
+}

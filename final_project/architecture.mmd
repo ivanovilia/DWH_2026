@@ -1,0 +1,35 @@
+flowchart TB
+    generator["Предоставляем: генератор просмотров, поиска и изменений профилей"] --> kafka["Kafka: действия и профили<br/>Инфраструктуру разворачивают студенты"]
+    catalogue["Предоставляем: каталог контента"] --> archive
+    kafka -->|"Все события, включая поздние; отдельная consumer group"| archive["Студенты: архивирование в S3<br/>События, изменения профилей, каталог"]
+    kafka -->|"Просмотры и поиск"| stream
+
+    subgraph realtime["Непрерывная загрузка в ClickHouse — реализуют студенты"]
+        stream["ClickHouse: Kafka Engine<br/>Чтение топика, настройка consumer group"] --> mv["ClickHouse: materialized view<br/>Преобразования и запись в целевые таблицы"]
+        mv --> speed["ClickHouse: speed-таблицы<br/>Просмотры и секунды по минуте и контенту<br/>Корректность при повторной доставке"]
+    end
+
+    archive --> freeze
+    subgraph batch["Airflow DAG по расписанию — реализуют студенты"]
+        freeze["1. Зафиксировать интервал и срез источников"] --> prepare["2. Проверить и дедуплицировать события"]
+        prepare --> scd["3. Построить SCD2 профилей в S3"]
+        scd --> joins["4. Исторический JOIN с профилем и каталогом<br/>Общие показатели и исторические витрины"]
+        joins --> checks["5. Контрольный срез из S3: Spark RDD и DataFrame<br/>Сверка и проверки качества"]
+        checks --> publish["6. Опубликовать проверенные batch-результаты<br/>После успеха обновить границу T"]
+    end
+
+    publish --> history["ClickHouse: опубликованные batch-таблицы"]
+    speed -->|"Время события >= T"| serving["Общий отчёт<br/>Детализация: минута + контент<br/>Без пересечения периодов"]
+    history -->|"Общие показатели за время события < T"| serving
+    history --> reports["Исторические отчёты<br/>Страны и тарифы на дату события<br/>Топ-5 контента и частоты слов в поиске"]
+
+    classDef supplied fill:#ffffff,stroke:#94a3b8,color:#172b45;
+    classDef streamClass fill:#ecf5ff,stroke:#a6c6e9,color:#225d98;
+    classDef batchClass fill:#f1edff,stroke:#c4b2e0,color:#56387f;
+    classDef store fill:#ecf8f2,stroke:#afd6c1,color:#286646;
+    classDef servingClass fill:#172b45,stroke:#172b45,color:#ffffff;
+    class generator,catalogue,kafka supplied;
+    class stream,mv,speed streamClass;
+    class freeze,prepare,scd,joins,checks,publish,history,reports batchClass;
+    class archive store;
+    class serving servingClass;

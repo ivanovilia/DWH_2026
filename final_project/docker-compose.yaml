@@ -1,0 +1,249 @@
+name: dwh-cinema-final
+
+x-airflow-common: &airflow-common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  image: dwh-cinema-final-airflow:2.10.5-spark3.5.4
+  user: "50000:0"
+  environment: &airflow-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__DEFAULT_TIMEZONE: utc
+    AIRFLOW__CORE__PARALLELISM: "2"
+    AIRFLOW__WEBSERVER__SECRET_KEY: local-cinema-development-key
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+    PYTHONPATH: /opt/airflow:/opt/airflow/jobs:/opt/airflow/scripts
+    PYSPARK_PYTHON: /usr/local/bin/python
+    SPARK_MASTER: local[2]
+    SPARK_LOCAL_IP: 127.0.0.1
+    TZ: UTC
+    FP_DATASET: ${FP_DATASET:-fixture}
+    S3_BUCKET: ${S3_BUCKET:-cinema}
+    S3_ENDPOINT: http://rustfs:9000
+    AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-cinemastudent}
+    AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-cinema-local-secret}
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_EC2_METADATA_DISABLED: "true"
+    AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+    AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    CH_URL: http://clickhouse:8123
+    CH_DATABASE: cinema
+    CH_USER: ${CH_USER:-cinema}
+    CH_PASSWORD: ${CH_PASSWORD:-cinema-local-secret}
+    KAFKA_BOOTSTRAP: kafka:19092
+  volumes:
+    - ./dags:/opt/airflow/dags:ro
+    - ./jobs:/opt/airflow/jobs:ro
+    - ./scripts:/opt/airflow/scripts:ro
+    - ./sql:/opt/airflow/sql:ro
+    - ./data:/opt/airflow/data:ro
+    - ./reports:/opt/airflow/reports
+    - airflow-logs:/opt/airflow/logs
+
+services:
+  kafka:
+    image: apache/kafka:3.9.1
+    depends_on:
+      volume-init:
+        condition: service_completed_successfully
+    environment:
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:19093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:19092,CONTROLLER://0.0.0.0:19093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:19092,EXTERNAL://localhost:${KAFKA_PORT:-19092}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_NUM_PARTITIONS: "1"
+    ports:
+      - "127.0.0.1:${KAFKA_PORT:-19092}:9092"
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+    healthcheck:
+      test: [CMD-SHELL, "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:19092 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 8s
+      retries: 40
+      start_period: 20s
+
+  kafka-init:
+    image: apache/kafka:3.9.1
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-ec"]
+    command:
+      - |
+        for topic in cinema.events cinema.profile_changes; do
+          /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:19092 \
+            --create --if-not-exists --topic "$$topic" --partitions 1 --replication-factor 1
+        done
+    restart: "no"
+
+  postgres:
+    image: postgres:16.6-bookworm
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.3
+    environment:
+      CLICKHOUSE_DB: cinema
+      CLICKHOUSE_USER: ${CH_USER:-cinema}
+      CLICKHOUSE_PASSWORD: ${CH_PASSWORD:-cinema-local-secret}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - clickhouse-logs:/var/log/clickhouse-server
+    ports:
+      - "127.0.0.1:${CH_PORT:-8125}:8123"
+    healthcheck:
+      test: [CMD-SHELL, "clickhouse-client --user=$$CLICKHOUSE_USER --password=$$CLICKHOUSE_PASSWORD --query='SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 35
+
+  volume-init:
+    image: alpine:3.21
+    user: "0:0"
+    volumes:
+      - rustfs-data:/data
+      - rustfs-logs:/logs
+      - airflow-logs:/airflow-logs
+      - kafka-data:/kafka-data
+    command: [sh, -ec, "chown -R 10001:10001 /data /logs; chown -R 50000:0 /airflow-logs; chown -R 1000:1000 /kafka-data; chmod u+rwx /kafka-data"]
+    restart: "no"
+
+  rustfs:
+    image: rustfs/rustfs:1.0.4
+    user: "10001:10001"
+    depends_on:
+      volume-init:
+        condition: service_completed_successfully
+    environment:
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_CONSOLE_ADDRESS: 0.0.0.0:9001
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:-cinemastudent}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:-cinema-local-secret}
+      RUSTFS_OBS_LOG_DIRECTORY: /logs
+    ports:
+      - "127.0.0.1:${S3_PORT:-9004}:9000"
+      - "127.0.0.1:${S3_CONSOLE_PORT:-9005}:9001"
+    volumes:
+      - rustfs-data:/data
+      - rustfs-logs:/logs
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:9000/health]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  archive-consumer:
+    build:
+      context: .
+      dockerfile: docker/Archive.Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP: kafka:19092
+      KAFKA_ARCHIVE_GROUP: cinema_s3_archive_v1
+      S3_ENDPOINT: http://rustfs:9000
+      S3_BUCKET: ${S3_BUCKET:-cinema}
+      FP_DATASET: ${FP_DATASET:-fixture}
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-cinemastudent}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-cinema-local-secret}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    volumes:
+      - ./scripts/archive_consumer.py:/app/archive_consumer.py:ro
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+      rustfs:
+        condition: service_healthy
+    command: [python, -u, /app/archive_consumer.py]
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    depends_on:
+      postgres:
+        condition: service_healthy
+      volume-init:
+        condition: service_completed_successfully
+    environment:
+      <<: *airflow-env
+      _AIRFLOW_DB_MIGRATE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
+      _AIRFLOW_WWW_USER_USERNAME: ${AIRFLOW_USER:-student}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_PASSWORD:-student}
+      _AIRFLOW_WWW_USER_FIRSTNAME: Student
+      _AIRFLOW_WWW_USER_LASTNAME: DWH
+      _AIRFLOW_WWW_USER_ROLE: Admin
+      _AIRFLOW_WWW_USER_EMAIL: student@example.com
+    command: version
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:${AIRFLOW_PORT:-8082}:8080"
+    command: webserver
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:8080/health]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+
+  airflow-scheduler:
+    <<: *airflow-common
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    command: scheduler
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:8974/health]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+
+  tools:
+    <<: *airflow-common
+    profiles: [tools]
+    command: [python, /opt/airflow/scripts/bootstrap.py]
+
+volumes:
+  kafka-data:
+  postgres-data:
+  clickhouse-data:
+  clickhouse-logs:
+  rustfs-data:
+  rustfs-logs:
+  airflow-logs:

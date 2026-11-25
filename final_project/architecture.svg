@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1460" viewBox="0 0 1800 1460" role="img" aria-labelledby="title desc">
+<title id="title">Итоговый проект: DWH онлайн-кинотеатра</title>
+<desc id="desc">Генератор отправляет просмотры, поиск и изменения профилей в Kafka. Независимые потребители сохраняют полный архив в S3 и строят оперативные показатели в ClickHouse. Airflow по расписанию выполняет SCD2, исторический JOIN, расчёт и проверки витрин, публикует batch-результат. Общий отчёт использует непересекающиеся интервалы двух слоёв.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,5 L0,10 Z" fill="#50657f"/></marker>
+</defs>
+<style>
+  text {font-family: Arial, Helvetica, sans-serif; fill:#172b45;}
+  .edge {fill:none;stroke:#50657f;stroke-width:2.5;stroke-linejoin:round;}
+</style>
+<rect width="1800" height="1460" fill="#f7f9fc"/>
+
+<text x="60" y="64" font-size="38" style="fill:#172b45" font-weight="700">Итоговый проект · DWH онлайн-кинотеатра</text>
+<text x="60" y="101" font-size="20" style="fill:#52657e" font-weight="400">Архитектура проекта · оперативная аналитика и исторические отчёты</text>
+<rect x="60" y="350" width="500" height="730" rx="22" fill="#ecf5ff" stroke="#b6d3f2" stroke-width="1.5"/>
+<text x="85" y="389" font-size="19" style="fill:#225d98" font-weight="700">ПОСТОЯННО · ЗАГРУЗКА В CLICKHOUSE</text>
+<rect x="640" y="555" width="1100" height="330" rx="22" fill="#f1edff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="663" y="593" font-size="20" style="fill:#624596" font-weight="700">ПО РАСПИСАНИЮ · AIRFLOW DAG</text>
+<path class="edge" d="M480,205 L590,205"/>
+<polygon points="590,205 578.0,200.0 578.0,210.0" fill="#50657f"/>
+<path class="edge" d="M860,280 L860,315 L35,315 L35,480 L85,480"/>
+<polygon points="85,480 73.0,475.0 73.0,485.0" fill="#50657f"/>
+<text x="350" y="306" font-size="16" style="fill:#52657e" font-weight="400">просмотры и поиск</text>
+<path class="edge" d="M1000,280 L1000,350"/>
+<polygon points="1000,350 1005.0,338.0 995.0,338.0" fill="#50657f"/>
+<text x="1020" y="321" font-size="16" style="fill:#52657e" font-weight="400">оба потока</text>
+<path class="edge" d="M1505,280 L1505,350"/>
+<polygon points="1505,350 1510.0,338.0 1500.0,338.0" fill="#50657f"/>
+<path class="edge" d="M310,540 L310,580"/>
+<polygon points="310,580 315.0,568.0 305.0,568.0" fill="#50657f"/>
+<path class="edge" d="M310,690 L310,840"/>
+<polygon points="310,840 315.0,828.0 305.0,828.0" fill="#50657f"/>
+<text x="332" y="757" font-size="16" style="fill:#52657e" font-weight="400">запись результатов</text>
+<path class="edge" d="M640,480 L610,480 L610,667 L660,667"/>
+<polygon points="660,667 648.0,662.0 648.0,672.0" fill="#50657f"/>
+<path class="edge" d="M1000,667 L1020,667"/>
+<polygon points="1020,667 1008.0,662.0 1008.0,672.0" fill="#50657f"/>
+<path class="edge" d="M1360,667 L1380,667"/>
+<polygon points="1380,667 1368.0,662.0 1368.0,672.0" fill="#50657f"/>
+<path class="edge" d="M1550,715 L1550,750"/>
+<polygon points="1550,750 1555.0,738.0 1545.0,738.0" fill="#50657f"/>
+<path class="edge" d="M1380,797 L1360,797"/>
+<polygon points="1360,797 1372.0,802.0 1372.0,792.0" fill="#50657f"/>
+<path class="edge" d="M1020,797 L1000,797"/>
+<polygon points="1000,797 1012.0,802.0 1012.0,792.0" fill="#50657f"/>
+<path class="edge" d="M830,845 L830,930"/>
+<polygon points="830,930 835.0,918.0 825.0,918.0" fill="#50657f"/>
+<path class="edge" d="M310,1020 L310,1135 L650,1135 L650,1170"/>
+<polygon points="650,1170 655.0,1158.0 645.0,1158.0" fill="#50657f"/>
+<path class="edge" d="M1150,1080 L1150,1170"/>
+<polygon points="1150,1170 1155.0,1158.0 1145.0,1158.0" fill="#50657f"/>
+<path class="edge" d="M1575,1080 L1575,1170"/>
+<polygon points="1575,1170 1580.0,1158.0 1570.0,1158.0" fill="#50657f"/>
+<text x="1168" y="1135" font-size="16" style="fill:#52657e" font-weight="400">общие метрики</text>
+<rect x="60" y="145" width="420" height="135" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="82" y="176" font-size="22" style="fill:#172b45" font-weight="700">Генератор · предоставляем</text>
+<text x="82" y="210" font-size="18" style="fill:#405572" font-weight="400">Просмотры и поисковые запросы</text>
+<text x="82" y="237" font-size="18" style="fill:#405572" font-weight="400">Изменения профилей пользователей</text>
+<rect x="590" y="145" width="540" height="135" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="614" y="179" font-size="23" style="fill:#172b45" font-weight="700">Kafka · разворачивают студенты</text>
+<text x="614" y="216" font-size="18" style="fill:#405572" font-weight="400">Поток действий + поток изменений профилей</text>
+<text x="614" y="243" font-size="18" style="fill:#405572" font-weight="400">Повторы и опоздания задаются генератором</text>
+<rect x="1270" y="145" width="470" height="135" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="1293" y="179" font-size="21" style="fill:#172b45" font-weight="700">Каталог · предоставляем данные</text>
+<text x="1293" y="216" font-size="18" style="fill:#405572" font-weight="400">Контент, категории, длительность</text>
+<text x="1293" y="243" font-size="18" style="fill:#405572" font-weight="400">Статический справочник</text>
+<rect x="85" y="430" width="450" height="110" rx="16" fill="#ffffff" stroke="#a6c6e9" stroke-width="1.5"/>
+<text x="107" y="468" font-size="23" style="fill:#225d98" font-weight="700">ClickHouse · Kafka Engine</text>
+<text x="107" y="500" font-size="17" style="fill:#405572" font-weight="400">Чтение топика напрямую из ClickHouse</text>
+<text x="107" y="525" font-size="17" style="fill:#405572" font-weight="400">Студенты настраивают таблицу и consumer group</text>
+<rect x="85" y="580" width="450" height="110" rx="16" fill="#ffffff" stroke="#a6c6e9" stroke-width="1.5"/>
+<text x="107" y="618" font-size="23" style="fill:#225d98" font-weight="700">ClickHouse · materialized view</text>
+<text x="107" y="650" font-size="17" style="fill:#405572" font-weight="400">Перенос сообщений в целевые таблицы</text>
+<text x="107" y="675" font-size="17" style="fill:#405572" font-weight="400">Студенты реализуют преобразования</text>
+<rect x="85" y="840" width="450" height="180" rx="16" fill="#ffffff" stroke="#a6c6e9" stroke-width="1.5"/>
+<text x="107" y="878" font-size="22" style="fill:#225d98" font-weight="700">ClickHouse · speed-таблицы</text>
+<text x="107" y="915" font-size="17" style="fill:#405572" font-weight="400">Просмотры и секунды по минуте и контенту</text>
+<text x="107" y="943" font-size="17" style="fill:#405572" font-weight="400">Студенты проектируют DDL и агрегации</text>
+<text x="107" y="971" font-size="17" style="fill:#405572" font-weight="400">и обеспечивают корректность при повторах</text>
+<rect x="640" y="350" width="1100" height="160" rx="16" fill="#ecf8f2" stroke="#afd6c1" stroke-width="1.5"/>
+<text x="665" y="389" font-size="24" style="fill:#286646" font-weight="700">S3 · полный архив событий и каталог</text>
+<text x="665" y="426" font-size="18" style="fill:#405572" font-weight="400">Студенты архивируют оба потока отдельной consumer group, независимой от ClickHouse.</text>
+<text x="665" y="455" font-size="18" style="fill:#405572" font-weight="400">raw_events · raw_profile_changes · ref_catalogue</text>
+<text x="665" y="484" font-size="18" style="fill:#405572" font-weight="400">Поздние события сохраняются; пакетный расчёт пересчитывает затронутые периоды.</text>
+<rect x="660" y="620" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="675" y="649" font-size="19" style="fill:#56387f" font-weight="700">1. Зафиксировать вход</text>
+<text x="675" y="676" font-size="16" style="fill:#405572" font-weight="400">Интервал + версия исходного среза</text>
+<text x="675" y="699" font-size="16" style="fill:#405572" font-weight="400">Стабильный вход при повторе</text>
+<rect x="1020" y="620" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="1035" y="649" font-size="19" style="fill:#56387f" font-weight="700">2. Подготовить события</text>
+<text x="1035" y="676" font-size="16" style="fill:#405572" font-weight="400">Проверка схемы и ошибок</text>
+<text x="1035" y="699" font-size="16" style="fill:#405572" font-weight="400">Дедупликация событий</text>
+<rect x="1380" y="620" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="1395" y="649" font-size="19" style="fill:#56387f" font-weight="700">3. Построить SCD2</text>
+<text x="1395" y="676" font-size="16" style="fill:#405572" font-weight="400">История профилей в S3</text>
+<text x="1395" y="699" font-size="16" style="fill:#405572" font-weight="400">Версии страны и тарифа</text>
+<rect x="1380" y="750" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="1395" y="779" font-size="19" style="fill:#56387f" font-weight="700">4. JOIN и витрины</text>
+<text x="1395" y="806" font-size="16" style="fill:#405572" font-weight="400">Факты + исторический профиль + каталог</text>
+<text x="1395" y="829" font-size="16" style="fill:#405572" font-weight="400">Общие и исторические показатели</text>
+<rect x="1020" y="750" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="1035" y="779" font-size="19" style="fill:#56387f" font-weight="700">5. Проверить расчёты</text>
+<text x="1035" y="806" font-size="16" style="fill:#405572" font-weight="400">Spark RDD ↔ DataFrame</text>
+<text x="1035" y="829" font-size="16" style="fill:#405572" font-weight="400">Срез из S3 + качество витрин</text>
+<rect x="660" y="750" width="340" height="95" rx="12" fill="#ffffff" stroke="#d0c3ed" stroke-width="1.5"/>
+<text x="675" y="779" font-size="19" style="fill:#56387f" font-weight="700">6. Опубликовать результат</text>
+<text x="675" y="806" font-size="16" style="fill:#405572" font-weight="400">Проверенный batch → ClickHouse</text>
+<text x="675" y="829" font-size="16" style="fill:#405572" font-weight="400">После успеха — обновить границу T</text>
+<rect x="640" y="930" width="1100" height="150" rx="16" fill="#ffffff" stroke="#c4b2e0" stroke-width="1.5"/>
+<text x="665" y="969" font-size="24" style="fill:#56387f" font-weight="700">ClickHouse · опубликованные batch-таблицы</text>
+<text x="665" y="1007" font-size="18" style="fill:#405572" font-weight="400">1. Те же поминутные показатели, что в speed-слое, пересчитанные по архиву.</text>
+<text x="665" y="1037" font-size="18" style="fill:#405572" font-weight="400">2. Исторические витрины: просмотры по стране и тарифу на момент события.</text>
+<rect x="440" y="1170" width="900" height="165" rx="20" fill="#172b45" stroke="#172b45" stroke-width="1.5"/>
+<text x="466" y="1209" font-size="23" style="fill:#ffffff" font-weight="700">Общий отчёт · студенты реализуют согласование слоёв</text>
+<text x="466" y="1250" font-size="23" style="fill:#ffffff" font-weight="700">batch: время события &lt; T     +     speed: время события ≥ T</text>
+<text x="466" y="1285" font-size="17" style="fill:#d9e5f4" font-weight="400">Детализация: минута + контент; периоды не пересекаются.</text>
+<text x="466" y="1312" font-size="17" style="fill:#d9e5f4" font-weight="400">T — граница закрытого интервала, продвигается после успешной публикации.</text>
+<rect x="1410" y="1170" width="330" height="165" rx="16" fill="#ffffff" stroke="#c4b2e0" stroke-width="1.5"/>
+<text x="1430" y="1209" font-size="21" style="fill:#56387f" font-weight="700">Исторические отчёты</text>
+<text x="1430" y="1250" font-size="17" style="fill:#405572" font-weight="400">Страна и тариф на дату просмотра</text>
+<text x="1430" y="1278" font-size="17" style="fill:#405572" font-weight="400">Топ-5 контента за день</text>
+<text x="1430" y="1306" font-size="17" style="fill:#405572" font-weight="400">Частоты слов в поиске</text>
+<text x="60" y="1383" font-size="19" style="fill:#172b45" font-weight="700">ДАЁМ: генератор и данные. СТУДЕНТЫ: инфраструктура, загрузка, DAG, SCD2, JOIN, DDL, метаполя и проверки.</text>
+<text x="60" y="1417" font-size="17" style="fill:#52657e" font-weight="400">ClickHouse на схеме — один аналитический слой с разными таблицами. Шесть блоков DAG — этапы; внутри может быть несколько задач.</text>
+</svg>

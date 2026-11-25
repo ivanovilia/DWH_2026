@@ -1,0 +1,28 @@
+{"event_id":"38b65ed6e0b0-e00000001","event_time":"2026-01-01T00:01:00Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":60,"query":null,"available_at":"2026-01-01T00:01:05Z"}
+{"event_id":"38b65ed6e0b0-e00000002","event_time":"2026-01-01T00:02:00Z","user_id":1001,"event_type":"view","content_id":1,"watch_time_seconds":71,"query":null,"available_at":"2026-01-01T00:02:05Z"}
+{"event_id":"38b65ed6e0b0-e00000021","event_time":"2026-01-01T00:03:20Z","user_id":1002,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"космос приключения","available_at":"2026-01-01T00:03:23Z"}
+{"event_id":"38b65ed6e0b0-e00000001","event_time":"2026-01-01T00:01:00Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":60,"query":null,"available_at":"2026-01-01T00:05:00Z"}
+{"event_id":"38b65ed6e0b0-e00000003","event_time":"2026-01-01T01:00:00Z","user_id":1001,"event_type":"view","content_id":2,"watch_time_seconds":82,"query":null,"available_at":"2026-01-01T01:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000004","event_time":"2026-01-01T02:00:00Z","user_id":1001,"event_type":"view","content_id":3,"watch_time_seconds":93,"query":null,"available_at":"2026-01-01T02:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000005","event_time":"2026-01-01T03:00:00Z","user_id":1001,"event_type":"view","content_id":4,"watch_time_seconds":104,"query":null,"available_at":"2026-01-01T03:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000006","event_time":"2026-01-01T04:00:00Z","user_id":1001,"event_type":"view","content_id":5,"watch_time_seconds":115,"query":null,"available_at":"2026-01-01T04:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000022","event_time":"2026-01-01T04:13:20Z","user_id":1003,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"новые фильмы","available_at":"2026-01-01T04:13:23Z"}
+{"event_id":"38b65ed6e0b0-e00000007","event_time":"2026-01-01T05:00:00Z","user_id":1001,"event_type":"view","content_id":6,"watch_time_seconds":126,"query":null,"available_at":"2026-01-01T05:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000023","event_time":"2026-01-01T08:23:20Z","user_id":1002,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"семейная комедия","available_at":"2026-01-01T08:23:23Z"}
+{"event_id":"38b65ed6e0b0-e00000008","event_time":"2026-01-01T11:59:59Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":137,"query":null,"available_at":"2026-01-01T12:00:04Z"}
+{"event_id":"38b65ed6e0b0-e00000009","event_time":"2026-01-01T12:00:00Z","user_id":1001,"event_type":"view","content_id":1,"watch_time_seconds":148,"query":null,"available_at":"2026-01-01T12:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000010","event_time":"2026-01-01T12:00:01Z","user_id":1001,"event_type":"view","content_id":2,"watch_time_seconds":159,"query":null,"available_at":"2026-01-01T12:00:06Z"}
+{"event_id":"38b65ed6e0b0-e00000024","event_time":"2026-01-01T12:33:20Z","user_id":1003,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"история путешествия","available_at":"2026-01-01T12:33:23Z"}
+{"event_id":"38b65ed6e0b0-e00000025","event_time":"2026-01-01T16:43:20Z","user_id":1002,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"детектив сериал","available_at":"2026-01-01T16:43:23Z"}
+{"event_id":"38b65ed6e0b0-e00000026","event_time":"2026-01-01T20:53:20Z","user_id":1003,"event_type":"search","content_id":null,"watch_time_seconds":null,"query":"документальное кино","available_at":"2026-01-01T20:53:23Z"}
+{"event_id":"38b65ed6e0b0-e00000011","event_time":"2026-01-01T23:59:59Z","user_id":1001,"event_type":"view","content_id":3,"watch_time_seconds":170,"query":null,"available_at":"2026-01-02T00:00:04Z"}
+{"event_id":"38b65ed6e0b0-e00000012","event_time":"2026-01-02T00:00:00Z","user_id":1001,"event_type":"view","content_id":4,"watch_time_seconds":181,"query":null,"available_at":"2026-01-02T00:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000013","event_time":"2026-01-02T00:00:01Z","user_id":1001,"event_type":"view","content_id":5,"watch_time_seconds":192,"query":null,"available_at":"2026-01-02T00:00:06Z"}
+{"event_id":"38b65ed6e0b0-e00000014","event_time":"2026-01-02T01:00:00Z","user_id":1001,"event_type":"view","content_id":6,"watch_time_seconds":203,"query":null,"available_at":"2026-01-02T01:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000015","event_time":"2026-01-02T03:46:40Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":214,"query":null,"available_at":"2026-01-02T03:46:45Z"}
+{"event_id":"38b65ed6e0b0-e00000016","event_time":"2026-01-02T09:20:00Z","user_id":1001,"event_type":"view","content_id":1,"watch_time_seconds":225,"query":null,"available_at":"2026-01-02T09:20:05Z"}
+{"event_id":"38b65ed6e0b0-e00000017","event_time":"2026-01-02T23:59:59Z","user_id":1001,"event_type":"view","content_id":2,"watch_time_seconds":236,"query":null,"available_at":"2026-01-03T00:00:04Z"}
+{"event_id":"38b65ed6e0b0-e00000018","event_time":"2026-01-03T00:00:00Z","user_id":1001,"event_type":"view","content_id":3,"watch_time_seconds":247,"query":null,"available_at":"2026-01-03T00:00:05Z"}
+{"event_id":"38b65ed6e0b0-e00000019","event_time":"2026-01-03T00:00:01Z","user_id":1001,"event_type":"view","content_id":4,"watch_time_seconds":258,"query":null,"available_at":"2026-01-03T00:00:06Z"}
+{"event_id":"38b65ed6e0b0-e00000020","event_time":"2026-01-01T13:00:00Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":120,"query":null,"available_at":"2026-01-04T00:00:20Z"}
+{"event_id":"38b65ed6e0b0-e00000001","event_time":"2026-01-01T00:01:00Z","user_id":1001,"event_type":"view","content_id":0,"watch_time_seconds":60,"query":null,"available_at":"2026-01-04T00:00:30Z"}

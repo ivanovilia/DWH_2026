@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "mode": "demo",
+  "start_time": "2026-01-01T00:00:00Z",
+  "seed": 42,
+  "events": 6000,
+  "users": 100,
+  "days": 3,
+  "catalogue_sha256": "de951d1fc787b48960d97e73bc1be39d8357a8db7689692003da5e07a6d52762",
+  "dataset_id": "eb79b4da1bf8",
+  "event_messages": 6138,
+  "unique_events": 6000,
+  "profile_messages": 203,
+  "unique_changes": 202,
+  "catalogue_rows": 200,
+  "suggested_arrival_cutoff": "2026-01-04T00:00:00Z",
+  "event_time_min": "2026-01-01T00:01:00Z",
+  "event_time_max": "2026-01-03T23:59:33Z",
+  "available_at_max": "2026-01-04T23:57:54Z"
+}

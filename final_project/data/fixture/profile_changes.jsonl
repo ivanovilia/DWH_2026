@@ -1,0 +1,9 @@
+{"change_id":"38b65ed6e0b0-p00000001","user_id":1001,"effective_at":"2026-01-01T00:00:00Z","country":"RU","subscription_tier":"basic","available_at":"2026-01-01T00:00:01Z"}
+{"change_id":"38b65ed6e0b0-p00000002","user_id":1002,"effective_at":"2026-01-01T00:00:00Z","country":"BY","subscription_tier":"standard","available_at":"2026-01-01T00:00:02Z"}
+{"change_id":"38b65ed6e0b0-p00000003","user_id":1003,"effective_at":"2026-01-01T00:00:00Z","country":"KZ","subscription_tier":"basic","available_at":"2026-01-01T00:00:03Z"}
+{"change_id":"38b65ed6e0b0-p00000004","user_id":1001,"effective_at":"2026-01-02T00:00:00Z","country":"RU","subscription_tier":"premium","available_at":"2026-01-02T00:00:02Z"}
+{"change_id":"38b65ed6e0b0-p00000008","user_id":1002,"effective_at":"2026-01-02T00:00:00Z","country":"AM","subscription_tier":"standard","available_at":"2026-01-02T00:00:03Z"}
+{"change_id":"38b65ed6e0b0-p00000005","user_id":1001,"effective_at":"2026-01-02T06:00:00Z","country":"RU","subscription_tier":"premium","available_at":"2026-01-02T06:00:02Z"}
+{"change_id":"38b65ed6e0b0-p00000004","user_id":1001,"effective_at":"2026-01-02T00:00:00Z","country":"RU","subscription_tier":"premium","available_at":"2026-01-02T07:00:00Z"}
+{"change_id":"38b65ed6e0b0-p00000006","user_id":1001,"effective_at":"2026-01-03T00:00:00Z","country":"RU","subscription_tier":"basic","available_at":"2026-01-03T00:00:02Z"}
+{"change_id":"38b65ed6e0b0-p00000007","user_id":1001,"effective_at":"2026-01-01T12:00:00Z","country":"KZ","subscription_tier":"basic","available_at":"2026-01-04T00:00:10Z"}
